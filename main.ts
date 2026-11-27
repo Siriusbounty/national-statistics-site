@@ -1,4 +1,4 @@
-// NusaStat entrypoint (Node 22, standard library only). The site is the
+// NusaStat v2 entrypoint (Node 22, standard library only). The site is the
 // static app/ folder beside this file: plain HTML, CSS and ES modules, no
 // build step, nothing fetched from the network. This program hands it in by
 // copying app/ and screenshots/ to /output and writing /output/dossier.json
