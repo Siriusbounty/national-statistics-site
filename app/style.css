@@ -1,18 +1,34 @@
-/* NusaStat — a clean, print-like statistics site. Deep navy + warm amber on
-   off-white; system fonts only, no webfont fetch. Mobile-first: the KPI grid
-   collapses to one column and the nav scrolls horizontally on a phone. */
+/* NusaStat v2 — a clean, print-like statistics site. Deep navy + warm amber
+   on off-white; system fonts only, no webfont fetch. A dark theme is one
+   class away ([data-theme="dark"] on <html>); charts take their text and
+   grid colours from the variables below, so they stay readable in both.
+   Mobile-first: the KPI grid collapses and the nav scrolls on a phone. */
 
 :root {
   --navy: #0b2545;
   --blue: #0b5fff;
   --teal: #0e7490;
+  --green: #15803d;
   --amber: #f59e0b;
+  --rust: #c2410c;
   --ink: #0f172a;
+  --body: #334155;
   --muted: #64748b;
   --line: #e2e8f0;
   --bg: #f8fafc;
   --card: #ffffff;
+  --hover: #f1f5f9;
   --radius: 14px;
+}
+
+[data-theme="dark"] {
+  --ink: #f1f5f9;
+  --body: #cbd5e1;
+  --muted: #94a3b8;
+  --line: #1e3a52;
+  --bg: #0a1626;
+  --card: #10233a;
+  --hover: #16324f;
 }
 
 * { box-sizing: border-box; }
@@ -69,6 +85,19 @@ nav#nav a {
 }
 nav#nav a:hover { background: rgba(255, 255, 255, 0.12); text-decoration: none; }
 nav#nav a.active { background: var(--amber); color: var(--navy); font-weight: 700; }
+.theme-btn {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: #e2e8f0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.theme-btn:hover { background: rgba(255, 255, 255, 0.12); }
 
 main#app {
   max-width: 1080px;
@@ -94,6 +123,18 @@ main#app {
 }
 .hero h1 { font-size: 2.5rem; line-height: 1.08; margin: 0 0 12px; letter-spacing: -0.02em; }
 .lede { font-size: 1.12rem; color: #dbeafe; max-width: 640px; margin: 0 0 20px; }
+.hero-stats {
+  display: flex;
+  gap: 8px 28px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 0.95rem;
+  color: #dbeafe;
+}
+.hero-stats strong { color: #fff; font-size: 1.15rem; }
 .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .btn {
   display: inline-block;
@@ -103,9 +144,13 @@ main#app {
   background: #fff;
   color: var(--navy);
   font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
 }
 .btn:hover { text-decoration: none; border-color: var(--navy); }
 .btn.primary { background: var(--amber); border-color: var(--amber); color: var(--navy); }
+[data-theme="dark"] .btn { background: var(--card); color: var(--ink); border-color: var(--line); }
+[data-theme="dark"] .btn.primary { background: var(--amber); border-color: var(--amber); color: var(--navy); }
 
 /* KPI cards */
 .kpi-grid {
@@ -127,6 +172,7 @@ main#app {
 .kpi:hover { text-decoration: none; border-color: var(--blue); box-shadow: 0 4px 16px rgba(11, 37, 69, 0.08); }
 .kpi-label { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
 .kpi-value { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; color: var(--navy); }
+[data-theme="dark"] .kpi-value { color: var(--ink); }
 .kpi-detail { font-size: 0.86rem; color: var(--muted); }
 
 /* Content cards */
@@ -138,19 +184,28 @@ main#app {
   margin-bottom: 22px;
 }
 .card h2 { margin: 0 0 6px; font-size: 1.3rem; letter-spacing: -0.01em; color: var(--navy); }
+[data-theme="dark"] .card h2 { color: var(--ink); }
 .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .card-head h2 { margin-bottom: 4px; }
 .source-note { font-size: 0.85rem; color: var(--muted); margin: 10px 0 0; }
 .chart svg { width: 100%; height: auto; display: block; }
+.chart text { fill: var(--muted); font-size: 11px; }
+.chart text.val { fill: var(--ink); font-weight: 600; font-size: 11px; }
+.chart text.val-neg { fill: #ffffff; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .zero { stroke: var(--muted); stroke-width: 1; }
+tfoot td { border-top: 2px solid var(--line); }
 .two-col { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; }
 .two-col .card { margin-bottom: 22px; }
 
 .page-head { margin-bottom: 20px; }
 .page-head h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; color: var(--navy); }
-.page-head .lede { color: #334155; margin: 0; }
+[data-theme="dark"] .page-head h1 { color: var(--ink); }
+.page-head .lede { color: var(--body); margin: 0; }
 
 .big-stat { font-size: 1.15rem; }
 .big-stat strong { color: var(--navy); font-size: 1.5rem; }
+[data-theme="dark"] .big-stat strong { color: var(--ink); }
 
 .bullets { margin: 8px 0 0; padding-left: 20px; }
 .bullets li { margin-bottom: 8px; }
@@ -160,7 +215,8 @@ main#app {
 .releases li:last-child { border-bottom: 0; }
 .rel-date { font-size: 0.8rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
 .releases strong { color: var(--navy); }
-.releases span:last-child { color: #475569; font-size: 0.93rem; }
+[data-theme="dark"] .releases strong { color: var(--ink); }
+.releases span:last-child { color: var(--body); font-size: 0.93rem; }
 
 /* Tables */
 .table-wrap { overflow-x: auto; margin-top: 12px; }
@@ -168,7 +224,7 @@ table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
 th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
 th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-tbody tr:hover { background: #f1f5f9; }
+tbody tr:hover { background: var(--hover); }
 table.sources td { vertical-align: top; }
 .table-hint { font-size: 0.88rem; color: var(--muted); margin: 4px 0 0; }
 
@@ -180,7 +236,7 @@ table.sources td { vertical-align: top; }
   padding: 8px 12px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
 }
 .controls input[type="search"] { min-width: 200px; }
@@ -193,16 +249,31 @@ table.sources td { vertical-align: top; }
   font-weight: 600;
   padding: 7px 14px;
   border: 0;
-  background: #fff;
+  background: var(--card);
   color: var(--navy);
   cursor: pointer;
 }
+[data-theme="dark"] .toggle-btn { color: var(--ink); }
 .toggle-btn.active { background: var(--navy); color: #fff; }
+
+.chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.chip {
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+}
+.chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
 
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--line);
-  background: #fff;
+  background: var(--card);
 }
 .site-footer .wrap {
   max-width: 1080px;
@@ -226,6 +297,7 @@ table.sources td { vertical-align: top; }
   .tagline { display: none; }
   .site-header .wrap { gap: 8px; }
   nav#nav { margin-left: 0; width: 100%; }
+  .theme-btn { margin-left: auto; }
   .card { padding: 18px; }
 }
 @media (max-width: 480px) {
