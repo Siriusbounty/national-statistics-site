@@ -1,7 +1,8 @@
-// Dev-only static server for the NusaStat app/ folder. Serves app/ at
+// Dev-only static server for the NusaStat v2 app/ folder. Serves app/ at
 // http://localhost:8080 (or --port <n>) so the site can be opened in a
-// desktop browser and at a phone's size. Not part of the graded hand-in:
-// the entry is static files, and main.ts is what the grader runs.
+// desktop browser and at a phone's size, and so screenshots can be taken.
+// Not part of the graded hand-in: the entry is static files, and main.ts
+// is what the grader runs.
 
 import { createReadStream, statSync } from 'node:fs';
 import { createServer } from 'node:http';
